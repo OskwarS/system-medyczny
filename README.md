@@ -1,16 +1,48 @@
-# React + Vite
+# 🏥 E-Choroszcz
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplikacja webowa do zarządzania pacjentami i wizytami lekarskimi. Projekt stworzony w ramach zajęć na uczelni.
 
-Currently, two official plugins are available:
+## 🛠️ Technologie
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* **Frontend:** React + Vite
+* **Backend:** Vercel Serverless Functions (Node.js)
+* **Baza Danych:** NeonDB (PostgreSQL)
+* **Style:** Czysty CSS (modułowy)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Uruchomienie
 
-## Expanding the ESLint configuration
+### Krok 1: Pobranie repozytorium
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+git clone <LINK_DO_REPOZYTORIUM>
+cd CosMed
+```
+
+### Krok 2: Pobranie bibliotek
+
+```bash
+npm install
+```
+
+### Krok 3: Konfiguracja .env
+
+1.  W głównym folderze projektu stwórz plik o nazwie **`.env`**
+2.  Wklej do środka Connection String z NeonDB (upewnij się, że zawiera `?sslmode=require`):
+
+```env
+DATABASE_URL='postgres://TWOJ_LOGIN:TWOJE_HASLO@ADRES_NEONDB/neondb?sslmode=require'
+```
+
+### Krok 4: Uruchomienie serwera
+
+```bash
+npm i -g vercel
+vercel dev
+```
+Przy pierwszym uruchomieniu Vercel poprosi o zalogowanie (logowanie przez przeglądarkę) i potwierdzenie ustawień projektu. Odpowiadaj Y na setup i Enter na większość pytań.
+
+jd
+
+
