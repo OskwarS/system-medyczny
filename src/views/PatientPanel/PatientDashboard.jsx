@@ -8,5 +8,7 @@ export default function PatientDashboard() {
       <p>Tutaj będzie historia wizyt i umawianie terminów.</p>
       <Link to="/">Wyloguj (Wróć)</Link>
     </div>
+
+    
   );
 }

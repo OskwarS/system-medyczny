@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function DoctorDashboard() {
-  // 1. Stan do przechowywania pacjentów
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // 2. Pobieranie danych po załadowaniu komponentu
   useEffect(() => {
-    fetch('http://localhost:3000/patients')
+    // ZMIANA 1: Pobieramy z naszego nowego API serverless, a nie json-servera
+    fetch('/api/patients')
       .then(response => response.json())
       .then(data => {
         setPatients(data);
@@ -20,7 +19,7 @@ export default function DoctorDashboard() {
   return (
     <div style={{ padding: '20px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1> Panel Lekarza</h1>
+        <h1>Panel Lekarza</h1>
         <Link to="/">Wyloguj</Link>
       </div>
 
@@ -28,7 +27,7 @@ export default function DoctorDashboard() {
         <h2>Lista Pacjentów</h2>
         
         {loading ? (
-          <p>Ładowanie danych...</p>
+          <p>Ładowanie danych z NeonDB...</p>
         ) : (
           <ul style={{ listStyle: 'none', padding: 0 }}>
             {patients.map(patient => (
@@ -39,14 +38,28 @@ export default function DoctorDashboard() {
                 justifyContent: 'space-between'
               }}>
                 <div>
-                  <strong>{patient.firstName} {patient.lastName}</strong><br/>
+                  {/* ZMIANA 2: Używamy nazw kolumn z bazy SQL (snake_case) */}
+                  <strong>{patient.first_name} {patient.last_name}</strong><br/>
                   <small>PESEL: {patient.pesel}</small>
                 </div>
-                <button style={{ cursor: 'pointer' }}>Szczegóły</button>
+                
+                {/* ZMIANA 3: Link prowadzi do ID, nie przekazujemy state (bezpieczniej) */}
+                <Link 
+                  to={`/details/${patient.id}`}
+                  style={{ textDecoration: 'none', color: 'blue', fontWeight: 'bold' }}
+                > 
+                  Szczegóły &rarr;
+                </Link>
               </li>
             ))}
           </ul>
         )}
+      </div>
+
+      <div style={{ border: '1px solid #ccc', padding: '20px', borderRadius: '8px', background: 'white', marginTop: '30px' }}>
+        <h2>Kalendarz</h2>
+        {/* Tu w przyszłości dodasz fetch('/api/appointments') */}
+        <p>Funkcja kalendarza w budowie...</p>
       </div>
     </div>
   );
