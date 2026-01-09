@@ -8,7 +8,7 @@ export default function DoctorDashboard() {
 
   const [doctors, setDoctors] = useState([]);
   const [patients, setPatients] = useState([]);
-  
+
 
   const [loadingDoctors, setLoadingDoctors] = useState(true);
   const [loadingPatients, setLoadingPatients] = useState(true);
@@ -53,11 +53,12 @@ export default function DoctorDashboard() {
 
 
   return (
-    <div className="dash-container">      
+    <div className="dash-container">
       {/* Nagłówek i Wyloguj */}
       <div className="dash-header">
         <h1>Panel Admina</h1>
         <div className="dash-actions">
+          <Link to="/admin/add-doctor" className="dash-btn dash-btn-primary">Dodaj Lekarza</Link>
           <button onClick={handleLogout} className="dash-btn dash-btn-danger">
             Wyloguj
           </button>
@@ -69,7 +70,7 @@ export default function DoctorDashboard() {
         {/* Lekarze */}
         <div className="dash-box">
           <h2>Lista Lekarzy ({doctors.length})</h2>
-          
+
           {loadingDoctors ? (
             <p>Ładowanie lekarzy...</p>
           ) : (
@@ -77,8 +78,8 @@ export default function DoctorDashboard() {
               {doctors.map(doctor => (
                 <li key={doctor.id} className="dash-listItem" >
                   <div>
-                    <strong>{doctor.first_name} {doctor.last_name}</strong><br/>
-                    <small>Specjalizacja: {doctor.specialization}</small><br/>
+                    <strong>{doctor.first_name} {doctor.last_name}</strong><br />
+                    <small>Specjalizacja: {doctor.specialization}</small><br />
                     <small>Email: {doctor.email}</small>
                   </div>
                   <Link to={`/doctor-details/${doctor.id}`} className="dash-btn dash-btn-outline">Szczegóły &rarr;</Link>
@@ -100,15 +101,15 @@ export default function DoctorDashboard() {
               {patients.map(patient => (
                 <li key={patient.id} className="dash-listItem" >
                   <div>
-                     {/* Używam nazw kolumn snake_case z bazy */}
-                    <strong>{patient.first_name} {patient.last_name}</strong><br/>
-                    <small>PESEL: {patient.pesel}</small><br/>
+                    {/* Używam nazw kolumn snake_case z bazy */}
+                    <strong>{patient.first_name} {patient.last_name}</strong><br />
+                    <small>PESEL: {patient.pesel}</small><br />
                     <small>Kontakt: {patient.contact}</small>
                   </div>
                   <Link to={`/patient-details/${patient.id}`} className="dash-btn dash-btn-outline" >Szczegóły &rarr;</Link>
                 </li>
               ))}
-               {patients.length === 0 && <p>Brak pacjentów w bazie.</p>}
+              {patients.length === 0 && <p>Brak pacjentów w bazie.</p>}
             </ul>
           )}
         </div>

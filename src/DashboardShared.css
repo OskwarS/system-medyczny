@@ -1,10 +1,12 @@
 /* --- STRUKTURA I LAYOUT --- */
 .dash-container {
     padding: 30px;
-    background-color: #f9fafb; /* Bardzo jasnoszary */
+    background-color: #f9fafb;
+    /* Bardzo jasnoszary */
     min-height: 100vh;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    color: #1f2937; /* Ciemnoszary tekst główny */
+    color: #1f2937;
+    /* Ciemnoszary tekst główny */
 }
 
 .dash-header {
@@ -20,7 +22,8 @@
     margin: 0;
     font-size: 1.5rem;
     font-weight: 700;
-    color: #111827; /* Prawie czarny */
+    color: #111827;
+    /* Prawie czarny */
 }
 
 .dash-actions {
@@ -39,11 +42,14 @@
     border: 1px solid #ccc;
     padding: 25px;
     margin-top: 20px;
-    border-radius: 12px; /* Nowoczesne zaokrąglenie */
+    border-radius: 12px;
+    /* Nowoczesne zaokrąglenie */
     background: white;
     flex: 1;
-    min-width: 350px; /* Żeby nie były za wąskie na telefonie */
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Minimalistyczny cień */
+    min-width: 350px;
+    /* Żeby nie były za wąskie na telefonie */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    /* Minimalistyczny cień */
 }
 
 .dash-boxTitle {
@@ -68,6 +74,7 @@
     justify-content: space-between;
     align-items: center;
 }
+
 .dash-listItem:last-child {
     border-bottom: none;
 }
@@ -83,7 +90,8 @@
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.875rem;
-    text-decoration: none; /* Dla Linków */
+    text-decoration: none;
+    /* Dla Linków */
     cursor: pointer;
     border: 1px solid transparent;
     transition: all 0.2s ease-in-out;
@@ -96,6 +104,7 @@
     color: white;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
+
 .dash-btn-primary:hover {
     background-color: #2563eb;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
@@ -109,6 +118,7 @@
     padding: 6px 12px;
     font-size: 0.8rem;
 }
+
 .dash-btn-outline:hover {
     background-color: #f9fafb;
     border-color: #9ca3af;
@@ -125,6 +135,7 @@
     border-color: #d1d5db;
     color: black;
 }
+
 .dash-btn-danger:hover {
     background-color: #dc2626;
 }
@@ -173,6 +184,7 @@
     color: #374151;
     border: none;
 }
+
 .dash-btn-cancel:hover {
     background-color: #d1d5db;
 }
@@ -181,4 +193,33 @@
     display: 'block';
     margin-bottom: 5px;
     font-size: 0.9rem;
+}
+
+/* --- LOADING SPINNER --- */
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
