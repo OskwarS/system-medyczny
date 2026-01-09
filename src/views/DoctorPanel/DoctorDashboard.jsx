@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import DoctorCalendar from './DoctorCalendar';
 
 import '../../DashboardShared.css';
 
@@ -28,6 +29,7 @@ export default function DoctorDashboard() {
   const handleLogout = () => {
     localStorage.removeItem('user_role');
     localStorage.removeItem('user_name');
+    localStorage.removeItem('user_id');
 
     navigate('/');
   };
@@ -37,13 +39,13 @@ export default function DoctorDashboard() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h1>Panel Lekarza</h1>
         <button onClick={handleLogout} className="dash-btn dash-btn-danger">
-            Wyloguj
+          Wyloguj
         </button>
       </div>
 
       <div className="dash-box">
         <h2>Lista Pacjentów ({patients.length})</h2>
-        
+
         {loading ? (
           <p>Ładowanie listy pacjentów...</p>
         ) : (
@@ -51,10 +53,10 @@ export default function DoctorDashboard() {
             {patients.map(patient => (
               <li key={patient.id} className="dash-listItem" >
                 <div>
-                  <strong>{patient.first_name} {patient.last_name}</strong><br/>
+                  <strong>{patient.first_name} {patient.last_name}</strong><br />
                   <small>PESEL: {patient.pesel}</small>
-                </div>        
-                <Link to={`/patient-details/${patient.id}`} className="dash-btn dash-btn-outline"> 
+                </div>
+                <Link to={`/patient-details/${patient.id}`} className="dash-btn dash-btn-outline">
                   Szczegóły &rarr;
                 </Link>
               </li>
@@ -64,9 +66,8 @@ export default function DoctorDashboard() {
       </div>
 
       <div className="dash-box">
-          <h2>Kalendarz</h2>
-        {/* Tu w przyszłości dodasz fetch('/api/appointments') */}
-        <p>Funkcja kalendarza w budowie...</p>
+        <h2>Kalendarz</h2>
+        <DoctorCalendar doctorId={localStorage.getItem('user_id')} />
       </div>
     </div>
   );

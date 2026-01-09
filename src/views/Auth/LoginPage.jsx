@@ -14,11 +14,11 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const res = await fetch('/api/login', { 
-        method: 'POST', 
+      const res = await fetch('/api/login', {
+        method: 'POST',
         body: JSON.stringify({ username, password })
       });
-      
+
       const data = await res.json();
 
       if (!res.ok) {
@@ -27,11 +27,12 @@ export default function LoginPage() {
 
       localStorage.setItem('user_role', data.role);
       localStorage.setItem('user_name', data.username);
+      localStorage.setItem('user_id', data.id);
 
       if (data.role === 'doctor') {
         navigate('/lekarz');
       } else if (data.role === 'patient') {
-        navigate('/pacjent'); 
+        navigate('/pacjent');
       } else if (data.role === 'admin') {
         navigate('/admin');
       } else {
@@ -46,31 +47,31 @@ export default function LoginPage() {
   return (
     <div className="login-container">
       <div className="login-card">
-        
+
         <h2 className="login-title">Zaloguj się</h2>
-        
+
         {error && <div className="error-msg">{error}</div>}
 
         <form onSubmit={handleLogin}>
-          
+
           <div className="form-group">
             <label className="form-label">Login</label>
-            <input 
-              type="text" 
+            <input
+              type="text"
               className="form-input"
               placeholder="Wpisz login"
-              value={username} 
+              value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
           <div className="form-group">
             <label className="form-label">Hasło</label>
-            <input 
-              type="password" 
+            <input
+              type="password"
               className="form-input"
               placeholder="••••••••"
-              value={password} 
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
@@ -78,16 +79,16 @@ export default function LoginPage() {
           <button type="submit" className="login-button">
             Zaloguj się
           </button>
-        
+
         </form>
 
         <div className="footer-text">
           Nie masz konta?{' '}
-          <Link to="/register" style={{color: '#4f46e5', textDecoration: 'none', fontWeight: 'bold'}}>
+          <Link to="/register" style={{ color: '#4f46e5', textDecoration: 'none', fontWeight: 'bold' }}>
             Zarejestruj się
           </Link>
         </div>
-      
+
       </div>
     </div>
   );
