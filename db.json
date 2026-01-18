@@ -1,0 +1,62 @@
+{
+  "patients": [
+    {
+      "id": 1,
+      "firstName": "Jan",
+      "lastName": "Kowalski",
+      "pesel": "85021512345",
+      "birthDate": "1985-02-15",
+      "gender": "M",
+      "address": "ul. Długa 5, 00-123 Warszawa",
+      "contact": "jan@example.com",
+      "insurance": "NFZ Oddział Mazowiecki",
+      "allergies": ["Penicylina", "Orzechy"],
+      "medicalHistory": [
+        { "date": "2023-01-10", "disease": "Grypa", "description": "Wysoka gorączka" }
+      ],
+      "medications": ["Witamina C", "Rutinoscorbin"]
+    },
+    {
+      "id": 2,
+      "firstName": "Anna",
+      "lastName": "Nowak",
+      "pesel": "92052054321",
+      "birthDate": "1992-05-20",
+      "gender": "K",
+      "address": "ul. Krótka 2, 30-001 Kraków",
+      "contact": "anna@example.com",
+      "insurance": "Prywatne - LuxMed",
+      "allergies": [],
+      "medicalHistory": [],
+      "medications": []
+    }
+  ],
+  "appointments": [
+    {
+      "id": 101,
+      "patientId": 1,
+      "doctorId": 1,
+      "date": "2023-11-15T10:00:00",
+      "status": "completed",
+      "diagnosis": "Infekcja górnych dróg oddechowych",
+      "recommendations": "Odpoczynek, dużo płynów."
+    },
+    {
+      "id": 102,
+      "patientId": 1,
+      "doctorId": 1,
+      "date": "2023-12-01T11:30:00",
+      "status": "scheduled",
+      "diagnosis": "",
+      "recommendations": ""
+    }
+  ],
+  "doctors": [
+    {
+      "id": 1,
+      "firstName": "Tomasz",
+      "lastName": "Medyczny",
+      "specialization": "Internista"
+    }
+  ]
+}

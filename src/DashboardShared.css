@@ -1,0 +1,290 @@
+/* --- STRUKTURA I LAYOUT --- */
+.dash-container {
+    padding: 30px;
+    min-height: 100vh;
+    /* Reverted from height: 100vh */
+    overflow-x: hidden;
+    /* Global horizontal scroll lock */
+    /* overflow: hidden;  <-- REMOVED GLOBAL LOCK */
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2937;
+
+    /* Animated Gradient Background */
+    background: linear-gradient(-45deg, #e0f2fe, #e0e7ff, #f3f4f6, #fff);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+}
+
+/* Helper class for specific views like AdminDashboard that should NOT scroll */
+.dash-fixed-view {
+    height: 100vh;
+    overflow: hidden;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.dash-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.dash-headerTitle {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    /* Prawie czarny */
+}
+
+.dash-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.dash-gridContainer {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+/* --- PUDEŁKA (KARTY) --- */
+.dash-box {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 25px;
+    margin-top: 20px;
+    border-radius: 20px;
+    /* More rounded */
+
+    /* Glassmorphism Effect */
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+
+    flex: 1;
+    min-width: 350px;
+
+    /* Entry Animation */
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+    /* Starte hidden for animation */
+    transform: translateY(20px);
+}
+
+/* Stagger animation for second box if possible, or just generic */
+.dash-box:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dash-boxTitle {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.25rem;
+    color: #374151;
+    font-weight: 600;
+}
+
+/* --- LISTY --- */
+.dash-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 65vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Ensure list content doesn't trigger horizontal scroll */
+    border: 1px solid #e5e7eb;
+    /* Optional: border to define the scroll area */
+    border-radius: 8px;
+    /* Optional: match container radius */
+}
+
+.dash-listItem {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    border-radius: 8px;
+}
+
+.dash-listItem:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+    transform: translateX(5px);
+}
+
+.dash-listItem:last-child {
+    border-bottom: none;
+}
+
+/* --- GUZIKI (KOMPONENTY) --- */
+
+/* Bazowy styl guzika */
+.dash-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+    /* Dla Linków */
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+    font-family: inherit;
+}
+
+/* Główny (Niebieski) */
+.dash-btn-primary {
+    background-color: #3b82f6;
+    color: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.dash-btn-primary:hover {
+    background-color: #2563eb;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    /* Glowing shadow */
+    transform: translateY(-2px);
+}
+
+/* Outline (Szczegóły - szary obrys) */
+.dash-btn-outline {
+    background-color: transparent;
+    border-color: #d1d5db;
+    color: black;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+}
+
+.dash-btn-outline:hover {
+    background-color: #f9fafb;
+    border-color: #9ca3af;
+    color: #111827;
+}
+
+/* Danger (Wyloguj - czerwony) */
+.dash-btn-danger {
+    background-color: #ef4444;
+    color: white;
+}
+
+.dash-btn-return {
+    border-color: #d1d5db;
+    color: black;
+}
+
+.dash-btn-danger:hover {
+    background-color: #dc2626;
+}
+
+/* --- SEKCJA EDYCJI (Inline Editing) --- */
+
+/* Kontener dla trybu wyświetlania i edycji */
+.dash-edit-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 15px;
+}
+
+/* Styl dla pól tekstowych w trybie edycji */
+.dash-input {
+    width: 95%;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background-color: #f9fafb;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+/* Efekt po kliknięciu w pole */
+.dash-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+/* Grupa przycisków akcji (Save/Cancel) */
+.dash-action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* Styl dla przycisku "Cancel" (szary) */
+.dash-btn-cancel {
+    background-color: #e5e7eb;
+    color: #374151;
+    border: none;
+}
+
+.dash-btn-cancel:hover {
+    background-color: #d1d5db;
+}
+
+.dash-label {
+    display: 'block';
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+/* --- LOADING SPINNER --- */
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    flex-direction: column;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3b82f6;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
