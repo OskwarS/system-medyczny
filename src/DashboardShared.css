@@ -19,7 +19,8 @@
 /* Helper class for specific views like AdminDashboard that should NOT scroll */
 .dash-fixed-view {
     height: 100vh;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 @keyframes gradientBG {
