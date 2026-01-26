@@ -2,6 +2,8 @@
 
 Aplikacja webowa do zarządzania pacjentami i wizytami lekarskimi. Projekt stworzony w ramach zajęć na uczelni.
 
+Szczegółowa dokumentacja projektu (struktura, funkcjonalności, wymagania) znajduje się w pliku [DOCUMENTATION.md](./DOCUMENTATION.md).
+
 ## 🛠️ Technologie
 
 * **Frontend:** React + Vite
@@ -44,6 +46,6 @@ vercel dev
 Przy pierwszym uruchomieniu Vercel poprosi o zalogowanie (logowanie przez przeglądarkę) i potwierdzenie ustawień projektu. Odpowiadaj Y na setup i Enter na większość pytań.
 ### NA PYTANIE **Link to existing project?** ODPOWIEDZIEĆ NO (N)
 
-jd
+
 
 
