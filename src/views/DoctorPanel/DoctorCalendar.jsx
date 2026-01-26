@@ -108,6 +108,18 @@ export default function DoctorCalendar({ doctorId }) {
     // Handler: Click on a slot
     const handleSlotClick = (slot) => {
         if (slot.appointment) {
+            // Check if it is today
+            const appDate = new Date(slot.appointment.date);
+            const today = new Date();
+            const isToday = appDate.getDate() === today.getDate() &&
+                appDate.getMonth() === today.getMonth() &&
+                appDate.getFullYear() === today.getFullYear();
+
+            if (!isToday) {
+                alert("Możesz otworzyć wizytę tylko w dniu jej trwania.");
+                return;
+            }
+
             // Open Visit Details
             navigate(`/lekarz/wizyta/${slot.appointment.id}`);
         } else {
@@ -148,6 +160,15 @@ export default function DoctorCalendar({ doctorId }) {
                         onChange={setDate}
                         value={date}
                         className="react-calendar"
+                        tileClassName={({ date, view }) => {
+                            if (view === 'month') {
+                                const now = new Date();
+                                now.setHours(0, 0, 0, 0);
+                                if (date < now) {
+                                    return 'gray-day';
+                                }
+                            }
+                        }}
                         tileContent={({ date, view }) => {
                             if (view === 'month') {
                                 const dateString = formatDate(date);
@@ -214,7 +235,8 @@ export default function DoctorCalendar({ doctorId }) {
                                     justifyContent: 'center',
                                     minHeight: '80px',
                                     textAlign: 'center',
-                                    transition: 'transform 0.1s'
+                                    transition: 'transform 0.1s',
+                                    opacity: (slot.appointment && new Date(slot.appointment.date).setHours(0, 0, 0, 0) !== new Date().setHours(0, 0, 0, 0)) ? 0.7 : 1
                                 }}
                                 onMouseEnter={e => { if (slot.appointment) e.currentTarget.style.transform = 'scale(1.03)' }}
                                 onMouseLeave={e => { if (slot.appointment) e.currentTarget.style.transform = 'scale(1)' }}
@@ -309,6 +331,10 @@ export default function DoctorCalendar({ doctorId }) {
             }
             .react-calendar__tile--active .dot.green {
                 background-color: #86efac;
+            }
+            .gray-day {
+                background-color: #e5e7eb !important;
+                color: #9ca3af !important;
             }
         `}</style>
         </div>

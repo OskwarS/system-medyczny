@@ -31,13 +31,11 @@ export default function PatientCalendar({ doctorId }) {
     useEffect(() => {
         const dateString = date.toLocaleDateString('en-CA');
 
-        // Find availability for the selected day
         const availability = availabilities.find(a => a.date.startsWith(dateString) || a.date === dateString);
 
         if (availability) {
             const rawSlots = generateTimeSlots(availability.start_time, availability.end_time, availability.slot_duration || 30);
 
-            // Filter out booked slots
             const validSlots = rawSlots.filter(slot => {
                 // Check if there is an active appointment at this time
                 const isBooked = appointments.some(app => {
@@ -80,14 +78,41 @@ export default function PatientCalendar({ doctorId }) {
     };
 
     const handleSlotClick = async (time) => {
+        const dateString = date.toLocaleDateString('en-CA');
+        const now = new Date();
+        const todayStr = now.toLocaleDateString('en-CA');
+
+        if (dateString === todayStr) {
+            const [slotH, slotM] = time.split(':').map(Number);
+            const nowH = now.getHours();
+            const nowM = now.getMinutes();
+
+            if (slotH < nowH || (slotH === nowH && slotM < nowM)) {
+                alert("Nie możesz umówić się na wizytę w przeszłości!");
+                return;
+            }
+        }
+
         const confirm = window.confirm(`Czy na pewno chcesz umówić wizytę na godzinę ${time}?`);
         if (!confirm) return;
 
-        const dateString = date.toLocaleDateString('en-CA');
+        // const dateString = date.toLocaleDateString('en-CA'); // Already declared above
         const patientId = localStorage.getItem('user_id');
 
         if (!patientId) {
             alert("Błąd: Nie znaleziono ID pacjenta. Zaloguj się ponownie.");
+            return;
+        }
+
+        const alreadyBooked = appointments.some(app => {
+            if (app.status === 'cancelled') return false;
+
+            const appDatePart = app.date.split('T')[0];
+            return appDatePart === dateString && String(app.patient_id) === String(patientId);
+        });
+
+        if (alreadyBooked) {
+            alert("Możesz umówić się do tego lekarza tylko raz dziennie!");
             return;
         }
 
@@ -107,10 +132,6 @@ export default function PatientCalendar({ doctorId }) {
 
             alert('Wizyta została umówiona!');
 
-            // Refresh Data
-            // Re-fetch appointments to update local state immediately without full component reload if possible,
-            // or just trigger the effect again. Simplest is to append locally or filter locally, 
-            // but fetching ensures consistency.
             fetch(`/api/appointments?doctorId=${doctorId}`)
                 .then(res => res.json())
                 .then(data => setAppointments(Array.isArray(data) ? data : []));
@@ -124,18 +145,7 @@ export default function PatientCalendar({ doctorId }) {
         if (view === 'month') {
             const dateString = date.toLocaleDateString('en-CA');
             const hasSlot = availabilities.some(a => a.date.startsWith(dateString) || a.date === dateString);
-
-            // For Patient, we just want to see available slots? Or matched style?
-            // DoctorCalendar logic: 
-            // - Blue dot: Registered (Occupied)
-            // - Green dot: Registered (Free)
-            // Patient needs to know where slots are available.
-
             if (hasSlot) {
-                // Check if totally booked?
-                // For simplicity, let's just show green dot if there is any availability slot that is FREE.
-                // We'd need to check appointments against slots here for perfect accuracy in month view.
-                // But generally "Green" means "Doctor works this day".
                 return <div className="dot green"></div>;
             }
         }
