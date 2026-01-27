@@ -106,32 +106,28 @@ export default function DoctorCalendar({ doctorId }) {
     };
 
     // Handler: Click on a slot
-    const handleSlotClick = (slot) => {
-        if (slot.appointment) {
-            // Check if it is today
-            const appDate = new Date(slot.appointment.date);
-            const today = new Date();
-            const isToday = appDate.getDate() === today.getDate() &&
-                appDate.getMonth() === today.getMonth() &&
-                appDate.getFullYear() === today.getFullYear();
-
-            if (!isToday) {
-                alert("Możesz otworzyć wizytę tylko w dniu jej trwania.");
-                return;
-            }
-
-            // Open Visit Details
-            navigate(`/lekarz/wizyta/${slot.appointment.id}`);
-        } else {
-            // Free slot - maybe nothing for now, or "Reserve manually"?
-            // User request only mentions "po kliknieciu w taka ktora zostala... zarejestrowana"
-        }
+    const handleAddAvailability = async (e) => {
+        e.preventDefault();
+        const dateString = formatDate(date); 
+    
+        await fetch('/api/availability', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                doctorId,
+                date: dateString,
+                startTime,
+                endTime,
+                slotDuration
+            })
+        });
+        fetchData();
+        alert('Dodano dostępność');
     };
 
     const handleAddAvailability = async (e) => {
         e.preventDefault();
         const dateToSend = new Date(date);
-        dateToSend.setDate(dateToSend.getDate());
 
         const dateString = formatDate(dateToSend);
 
